@@ -1,0 +1,24 @@
+<input class='recipe_name' value="{{this.name}}" placeholder="recipe name">
+	
+	{{#ifAuthorized this.author.id}}
+	<button class="btn edit_recipe"><i class="icon-ok"></i></button>
+	{{/ifAuthorized}}
+</input><br />
+<!--<p><b>Author:</b> {{this.author.username}}</p>-->
+<textarea class='recipe_description' placeholder="description">{{{this.description}}}</textarea><br />
+
+{{#if recipe.image}}
+<a href="{{recipe.image}}" class="recipe_image" data-fancybox-group="recipe_image_{{recipe.id}}" title="{{recipe.description}}">View Image</a><br/><br/>
+{{/if}}
+
+Servings: <input class='recipe_servings' value="{{this.servings}}" />
+
+<br />
+Active Time: <input class='recipe_active_time'  value="{{this.active_time}}" /><br />
+Inactive Time: <input class='recipe_inactive_time' value="{{this.inactive_time}}" /><br />
+<hr>
+<h3>Ingredients</h3>
+<div class="recipe_ingredients"></div>
+<hr>
+<h3>Steps</h3>
+<div class="recipe_steps"></div>

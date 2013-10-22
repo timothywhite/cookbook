@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"> 
+	<title>Cookbook</title> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+	<meta name="description" content=""> 
+	<meta name="author" content="">
+	<link href="/static/cookbook/assets/js/bootstrap/css/bootstrap.css" rel="stylesheet"> 
+	<link href="/static/cookbook/assets/js/bootstrap/css/bootstrap-responsive.css" rel="stylesheet"> 
+	<style>
+	.span4{
+		margin-top:100px;
+	}
+
+	</style>
+</head>
+<body>
+{% block content %}
+
+<div class="container-fluid">
+	<div class="span4 offset4">
+		{% if form.errors %}
+		<p>Your username and password didn't match. Please try again.</p>
+		{% endif %}
+		<form class="form-horizontal" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+			{% csrf_token %}
+			
+			<div class="control-group">
+				<label class="control-label" for="id_username">Username</label>
+				<div class="controls">
+					{{ form.username }}
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="id_password">Password</label>
+				<div class="controls">
+					{{ form.password }}
+				</div>
+			</div>
+			<div class="control-group">
+				<div class="controls">
+					<input class='btn btn-info' type="submit" value="login" />
+					<input type="hidden" name="next" value="{{ next }}" />
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock %}
+</body>
+</html>

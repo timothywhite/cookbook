@@ -1,0 +1,15 @@
+{{this.amount}} 
+<a href="#" 
+	id="measurement_{{this.measurement.id}}" 
+	class="measurement_abbreviation" rel="popover"  
+	title="{{this.measurement.name}}" >
+	{{this.measurement.abbreviation}}
+	</a> 
+{{#if this.ingredient.name }}
+	{{this.ingredient.name}} 
+	{{#if this.description}}
+		({{this.description}})
+	{{/if}}
+{{else}}
+	{{{this.description}}}
+{{/if}}

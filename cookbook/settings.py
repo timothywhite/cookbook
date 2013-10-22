@@ -98,6 +98,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+	#'recipes_web.middleware.auth.LoginRequiredMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -108,7 +109,6 @@ ROOT_URLCONF = 'cookbook.urls'
 WSGI_APPLICATION = 'cookbook.wsgi.application'
 
 TEMPLATE_DIRS = (
-
 )
 
 INSTALLED_APPS = (
@@ -119,6 +119,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 	'recipes_api',
+	'recipes_web',
 	'taggit',
 	'rest_framework'
 )
@@ -151,3 +152,10 @@ LOGGING = {
         },
     }
 }
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticatedOrReadOnly',)
+}
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'

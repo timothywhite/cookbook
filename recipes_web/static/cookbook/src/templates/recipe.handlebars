@@ -1,0 +1,31 @@
+<h2>
+	{{this.name}}
+	{{#ifAuthorized this.author.id}}
+	<button class="btn edit_recipe"><i class="icon-pencil"></i></button>
+	{{/ifAuthorized}}
+</h2>
+<p><b>Author:</b> {{this.author.username}}</p>
+<p>{{{this.description}}}</p>
+
+{{#if recipe.image}}
+<a href="{{recipe.image}}" class="recipe_image" data-fancybox-group="recipe_image_{{recipe.id}}" title="{{recipe.description}}">View Image</a><br/><br/>
+{{/if}}
+
+Servings: {{this.servings}}
+
+<!--<input type="hidden" id="recipe_scale_{{this.id}}" value={{this.scale}} />
+<span class="scale_up">
+	<i class="icon-arrow-up"></i>
+</span>
+<span class="scale_down">
+	<i class="icon-arrow-down"></i>
+</span>	-->
+<br />
+Active Time: {{this.active_time}}<br />
+Inactive Time: {{this.inactive_time}}<br />
+<hr>
+<h3>Ingredients</h3>
+<div class="recipe_ingredients"></div>
+<hr>
+<h3>Steps</h3>
+<div class="recipe_steps"></div>

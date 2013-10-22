@@ -38,7 +38,7 @@ class RecipeDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class RecipeList(generics.ListCreateAPIView):
 	model = models.Recipe
-	serializer_class = serializers.RecipeSerializer
+	serializer_class = serializers.RecipeListSerializer
 	
 	def get_queryset(self):
 		recipes = models.Recipe.objects.all()
@@ -88,6 +88,13 @@ class MeasurementDetail(generics.RetrieveUpdateDestroyAPIView):
 class MeasurementList(generics.ListCreateAPIView):
 	model = models.Measurement
 	serializer_class = serializers.MeasurementSerializer
+	
+	def get_queryset(self):
+		measurements = models.Measurement.objects.all()
+		if 'name' in self.request.GET:
+			name = self.request.GET['name']
+			measurements = measurements.filter(name__icontains=name)
+		return measurements
 
 
 class StepDetail(generics.RetrieveUpdateDestroyAPIView):

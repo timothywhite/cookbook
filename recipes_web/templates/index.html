@@ -1,0 +1,118 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+	<meta charset="utf-8"> 
+	<title>Cookbook</title> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+	<meta name="description" content=""> 
+	<meta name="author" content="">
+	
+	<link rel="stylesheet" href="/static/cookbook/assets/css/style.css" />
+	<link href="/static/cookbook/assets/js/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link href="/static/cookbook/assets/js/bootstrap/css/bootstrap-responsive.css" rel="stylesheet"> 
+</head>
+<body>
+	<div class="navbar"> 
+		<div class="navbar-inner"> 
+			<div class="container-fluid"> 
+				<a class="brand">Cookbook</a>
+				<div class="nav-collapse"> 
+					<ul class="nav"> 
+						<li class="active"><a href="/recipes">Home</a></li> 
+						<li><a href="/api" target="_blank">API</a></li>
+						{% if user.is_authenticated %}
+						<li><a href="/logout" target="_blank">Logout</a></li>
+						{% else %}
+						<li><a href="/login" target="_blank">Login</a></li>
+						{% endif %}
+					</ul> 
+				</div><!--/.nav-collapse --> 
+			</div> 
+		</div> 
+	</div>
+	<div class="container-fluid"> 
+		<div class="row-fluid"> 
+			<div id="sidebar" class="span3 sidebar"> 
+				
+			</div><!--/span--> 
+			<div class="span9" id='recipe'> 
+				<ul class="nav nav-tabs" id="recipe_tab_nav"></ul>
+				<div class="tab-content" id="recipe_tab_content"></div>
+			</div><!--/span--> 
+		</div><!--/row--> 
+		<hr>
+		<footer> 
+			<p>&copy; Tim White 2012 </p><a href="#myModal"  data-toggle="modal">Download Android Viewer</a>
+		</footer> 
+		<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+				<h3 id="myModalLabel">Android Recipe Viewer</h3>
+			</div>
+			<div class="modal-body">
+				<img style="float:right;" src="/static/cookbook/img/apk_icon.png" width="200"/>
+				<h4>Description</h4>
+				<p>Tired of searching for your recipes in a mobile browser? We hear you! Download this app for a fully functional recipe viewer on your Android smartphone.</p>
+				<h4>Features</h4>
+				<ul>
+					<li>Supports tablet screens with a split-pane view</li>
+					<li>Search by name for your favorite recipes</li>
+					<li>View any recipe in the Cookbook</li>
+					<li>Responds to recipe links from any app on your smartphone</li>
+				</ul>
+				<div class="alert alert-info">
+					<strong>Requires Android 4.0</strong> 
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+				<a href="/static/cookbook/Cookbook.apk" class="btn btn-primary">Download the Cookbook APK</a>
+			</div>
+		</div> 
+	</div><!--/.fluid-container--> 
+	
+	<!--scripts-->
+	<!--libraries-->
+	<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
+	
+	<script type='text/javascript' src='/static/cookbook/assets/js/underscore/underscore-min.js'></script>
+	<script type='text/javascript' src='/static/cookbook/assets/js/backbone/backbone-min.js'></script>
+	<script type='text/javascript' src='/static/cookbook/assets/js/backbone/backbone.marionette.min.js'></script>
+
+	<script type="text/javascript" src="/static/cookbook/assets/js/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/static/cookbook/assets/js/bootstrap/js/typeahead.js"></script>
+	<!--end libraries --> 
+	
+	<!--templates-->
+	<script type='text/javascript' src='/static/cookbook/assets/js/handlebars/handlebars.js'></script>
+	<script>
+		$(function(){
+			Handlebars.registerHelper('ifAuthorized', function(id, options){
+				{% if user.is_authenticated %}
+					if( id == {{user.id}} ) return options.fn(this);
+				{% else %}
+					return null;
+				{% endif %}
+			});
+			Handlebars.registerHelper('getUserId', function(block){
+				{% if user.is_authenticated %}
+					return {{user.id}};
+				{% else %}
+					return null;
+				{% endif %}
+			});
+		});
+	</script>
+	<!--end templates-->
+	
+	<!--application-->
+	<script type='text/javascript' src='/static/cookbook/src/application.js'></script>
+	
+	<!--modules-->
+	<script type='text/javascript' src='/static/cookbook/src/modules/extensions.js'></script>
+	<script type='text/javascript' src='/static/cookbook/src/modules/template.js'></script>
+	<script type='text/javascript' src='/static/cookbook/src/modules/tabs.js'></script>
+	<script type='text/javascript' src='/static/cookbook/src/modules/recipe.js'></script>
+	<script type='text/javascript' src='/static/cookbook/src/modules/sidebar.js'></script>
+</body>
+</html>

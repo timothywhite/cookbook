@@ -1,0 +1,45 @@
+<ul class="nav nav-pills sidebar_nav ">
+	<!--<li id="search_name_btn" class="active"><a href="#search_name" data-toggle="tab">Name</a></li>
+	<li id="search_ingredients_btn"><a href="#search_ingredients" data-toggle="tab">Ingredients</a></li>
+	<li id="search_tags_btn"><a href="#search_tags" data-toggle="tab">Tags</a></li>-->
+</ul>
+<hr />
+<div class="tab-content">
+	<div class="tab-pane active" id="search_name">
+		<div class="well form-search" id="search_name_form">
+			<input id="search_name_input" type="text" class="input-medium search-query" placeholder="Search by name">
+		</div>
+		<ul class="nav nav-list" id="search_results_name"></ul>
+	</div>
+	<div class="tab-pane" id="search_ingredients">
+		<form class="well form-search" id="search_ingredients_form">
+			<input id="search_ingredients_input" type="text" class="input-medium search-query" placeholder="Add ingredients.">
+		</form>
+		<div id="ingredient_labels" class="well"></div>
+		<ul class="nav nav-list" id="search_results_ingredients"></ul> 
+	</div>
+	<div class="tab-pane" id="search_tags">
+		<ul class="nav nav-pills tag_nav">
+			<li class="active">
+				<a href="#tag_search" data-toggle="tab">Search</a>
+			</li>
+			<li>
+				<a href="#tag_cloud" data-toggle="tab">Browse</a>
+			</li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane active" id="tag_search">
+				<div class="form-search well" id="search_tags_form">
+					<input id="search_tags_input" type="text" class="input-medium search-query" placeholder="Add tags.">
+					<div id="tag_labels" class="well"></div>
+				</div>
+				<ul class="nav nav-list" id="search_results_tag"></ul> 
+			</div>
+			<div class="tab-pane" id="tag_cloud">
+				<div id="tagcloud" class="well">
+				</div>
+				<ul class="nav nav-list" id="search_results_tag_browse"></ul> 
+			</div>
+		</div>
+	</div>
+</div>

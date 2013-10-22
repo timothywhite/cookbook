@@ -13,11 +13,7 @@ class WritableSerializerField(serializers.WritableField):
 	def to_native(self,value):
 		return self.serializer_class(value).data
 	def from_native(self,value):
-		dict = literal_eval(value)
-		# serializer = self.serializer_class(self.model.objects.get(pk=dict['id']),data=dict)
-		# valid = serializer.is_valid()
-		# model = serializer.object
-		return self.model.objects.get(pk=dict['id'])
+		return self.model.objects.get(pk=value['id'])
 
 class IngredientSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -104,6 +100,11 @@ class ServingsField(serializers.WritableField):
 		
 	def from_native(self, value):
 		return value
+		
+class RecipeListSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = models.Recipe
+		fields = ('id','name')
 		
 class RecipeSerializer(serializers.ModelSerializer):
 	recipe_ingredients = ScaledRecipeIngredientSerializer(many=True, read_only=True)

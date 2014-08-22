@@ -1,3 +1,31 @@
+{{#ifAuthenticated}}
+<button class="btn launch_recipe_modal"><i class="icon-plus"></i> New Recipe</button>
+<div id="new_recipe_modal" 
+	class="modal" 
+	tabindex="-1" role="dialog" 
+	aria-labelledby="new_recipe_label" 
+	aria-hidden="true" 
+	style="display: none;"
+	data-backdrop="static"
+	data-keyboard="false">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+		<h3 id="new_recipe_label">Add New Recipe</h3>
+	</div>
+	<div class="modal-body">
+		<input class="recipe_name" type="text" placeholder="name" value="" />
+		<input class="recipe_servings" type="text" placeholder="servings" value="" />
+		<input class="recipe_active_time" type="text" placeholder="active time" value="" />
+		<input class="recipe_inactive_time" type="text" placeholder="inactive time" value="" />
+		<textarea class="recipe_description" placeholder="description"></textarea>
+		<div class="error" style="display:none;"></div>
+	</div>
+	<div class="modal-footer">
+		<button data-dismiss="modal" aria-hidden="true">Cancel</button>
+		<a href="#" class="add_new_recipe btn btn-primary">Add New Recipe</a>
+	</div>
+</div>
+{{/ifAuthenticated}}
 <ul class="nav nav-pills sidebar_nav ">
 	<!--<li id="search_name_btn" class="active"><a href="#search_name" data-toggle="tab">Name</a></li>
 	<li id="search_ingredients_btn"><a href="#search_ingredients" data-toggle="tab">Ingredients</a></li>

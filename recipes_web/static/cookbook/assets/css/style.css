@@ -1,0 +1,34 @@
+#recipe_tab_content {
+
+}
+
+
+textarea.recipe_description{
+	width: 96%;
+	height: 100px;
+	margin-top: 10px;
+}
+
+.recipe_info span{
+	width: 120px;
+	display: inline-block;
+	margin-bottom: 10px;
+}
+.recipe_info input{
+	width: 50px;
+}
+.recipe_steps textarea{
+	width: 75%;
+	height: 75px;
+}
+div.new_step {
+	margin: 0 0 10px 25px;
+}
+button.add_step{
+	height: 85px;
+	position: relative;
+	top: -5px;
+}
+div.new_ingredient_container{
+	margin: 0 0 10px 25px;
+}

@@ -1,5 +1,50 @@
 <input class="amount" value="{{this.amount}}" placeholder="amount"/>
-<input class="measurement" value="{{this.measurement.name}}" />
-<input class="ingredient" value="{{this.ingredient.name}}" />
+<input class="measurement" value="{{this.measurement.name}}" placeholder="measurement"/>
+<input class="ingredient" value="{{this.ingredient.name}}" placeholder="ingredient"/>
 <input class="description" value="{{{this.description}}}" placeholder="description" />
-<button class="remove"><i class="icon-remove"></i></button>
+<button class="up_ingredient btn"><i class="icon-arrow-up"></i></button>
+<button class="down_ingredient btn"><i class="icon-arrow-down"></i></button>
+<button class="remove btn"><i class="icon-remove"></i></button>
+
+
+<div id="new_measurement_{{this.id}}" 
+	class="modal" 
+	tabindex="-1" role="dialog" 
+	aria-labelledby="new_measurement_label_{{this.id}}" 
+	aria-hidden="true" 
+	style="display: none;"
+	data-backdrop="static"
+	data-keyboard="false">
+	<div class="modal-header">
+		<h3 id="new_measurement_label_{{this.id}}">Add New Measurement?</h3>
+	</div>
+	<div class="modal-body">
+		<p>Do you really want to add this new measurement: <span class="new_measurement_name"></span>?</p>
+		<p>If you are sure, enter an abbreviation for your new measurement below (if applicable):</p>
+		<input class="measurement_abbreviation" type="text" placeholder="Abbreviation" value="" />
+	</div>
+	<div class="modal-footer">
+		<button class="revert_measurement btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+		<a href="#" class="add_new_measurement btn btn-primary" data-dismiss="modal">Add New Measurement</a>
+	</div>
+</div>
+
+<div id="new_ingredient_{{this.id}}" 
+	class="modal" 
+	tabindex="-1" role="dialog" 
+	aria-labelledby="new_ingredient_label_{{this.id}}" 
+	aria-hidden="true" 
+	style="display: none;"
+	data-backdrop="static"
+	data-keyboard="false">
+	<div class="modal-header">
+		<h3 id="new_ingredient_label_{{this.id}}">Add New Ingredient?</h3>
+	</div>
+	<div class="modal-body">
+		<p>Are you sure you want to add this new ingredient: <span class="new_ingredient_name"></span>?</p>
+	</div>
+	<div class="modal-footer">
+		<button class="revert_ingredient btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+		<a href="#" class="add_new_ingredient btn btn-primary" data-dismiss="modal">Add New Ingredient</a>
+	</div>
+</div>

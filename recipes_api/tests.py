@@ -1,10 +1,3 @@
-"""
-This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test".
-
-Replace this with more appropriate tests for your application.
-"""
-
 from django.test import TestCase
 from recipes_api.models import Recipe
 
@@ -12,6 +5,7 @@ from recipes_api.serializers import RecipeSerializer
 
 
 class RecipeScalingTests(TestCase):
+	"""Test recipe scaling."""
 	def setUp(self):
 		self.recipe = Recipe.objects.get(pk=2)
 		

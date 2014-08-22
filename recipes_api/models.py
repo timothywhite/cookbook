@@ -7,6 +7,7 @@ from taggit.managers import TaggableManager
 from mixed import Mixed
 
 import inflect
+#This module is used to pluralize ingredient and measurement names based on the related amounts.
 p = inflect.engine()
 
 
@@ -61,13 +62,15 @@ class Recipe(models.Model):
 	inactive_time = models.IntegerField()
 	description = models.TextField()
 	ingredients = models.ManyToManyField(Ingredient, through='RecipeIngredient')
-	image = models.ImageField(upload_to='cookbook/images/%Y/%m/', blank=True)
+	image = models.ImageField(upload_to=(lambda recipe,filename: 'images/recipes/%d/%s' % (recipe.id,filename)), blank=True)
 	tags = TaggableManager()
 	
 	def _get_tags(self):
+		"""Return tags as a comma delimited list of tags."""
 		return ', '.join([str(tag) for tag in self.tags.all()]);
 	
 	def _set_tags(self,tags):
+		"""Set tags from a comma delimited list of tags."""
 		tag_list = []
 		if ',' in tags:
 			tag_list = [s.strip() for s in tags.split(',')]
@@ -80,6 +83,7 @@ class Recipe(models.Model):
 	tag_set = property(_get_tags, _set_tags)
 	
 	def scale(self,factor):
+		"""Scale the recipe ingredients by <factor> in place. Does not commit changes to the database."""
 		assert factor > 0
 		if factor == 1:
 			return self
@@ -96,7 +100,8 @@ class Recipe(models.Model):
 	
 	def __unicode__(self):
 		return self.name
-	
+	class Meta:
+		ordering = ('name',)
 
 class RecipeIngredient(models.Model):
 	recipe = models.ForeignKey(Recipe, related_name='recipe_ingredients')
@@ -104,21 +109,22 @@ class RecipeIngredient(models.Model):
 	measurement = models.ForeignKey(Measurement)
 	amount = models.CharField(max_length=255, validators=[validate_mixed_number])
 	description = models.CharField(max_length=255,blank=True)
+	order = models.IntegerField(default=0)
 	
 	def _get_inflected_name(self):
+		"""Return the ingredient name appropriately pluralized based on the amount."""
 		return p.plural(self.ingredient.name,float(Mixed(self.amount)))
 	
 	inflected_name = property(_get_inflected_name)
 	
 	def _get_inflected_measurement(self):
+		"""Return the measurement name appropriately pluralized based on the amount."""
 		return p.plural(self.measurement.name, float(Mixed(self.amount)))
 	
 	inflected_measurement = property(_get_inflected_measurement)
 	
-	
 	def __unicode__(self):
 		s = str(self.amount) + ' ' + str(self.measurement) + ' '
-		
 		if (self.ingredient):
 			s += str(self.ingredient)
 			if (self.description):
@@ -129,14 +135,14 @@ class RecipeIngredient(models.Model):
 		
 		return s
 	
+	class Meta:
+		ordering = ('order',)
+	
 class Step(models.Model):
 	recipe = models.ForeignKey(Recipe, related_name='steps')
 	description = models.TextField()
-	order = models.IntegerField(default = 0)
-	image = models.ImageField(upload_to='cookbook/images/steps/%Y/%m/', blank=True)
-	
-	#def save(self,*args, **kwargs):
-	#    if (self.description.)
+	order = models.IntegerField(default=0)
+	image = models.ImageField(upload_to=(lambda s,f: 'images/recipes/%d/steps/%s' % (s.recipe.id,f)), blank=True)
 	
 	def __unicode__(self):
 		return 'Step'

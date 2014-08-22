@@ -28,12 +28,12 @@
     constructor: Typeahead
 
   , select: function () {
-      var val = this.$menu.find('.active').attr('data-value')
-      var item = this.finder(val)
-      this.$element
-        .val(this.updater(item))
-        .change()
-      return this.hide()
+		var val = this.$menu.find('.active').attr('data-value')
+		var item = this.finder(val)
+		this.$element
+			.val(this.updater(item))
+			.change()
+		return this.hide()
     }
   , labeler: function (item) {
       return item;
@@ -217,6 +217,8 @@
   , keyup: function (e) {
       switch(e.keyCode) {
         case 40: // down arrow
+			if(!this.shown) this.lookup();
+			break;
         case 38: // up arrow
         case 16: // shift
         case 17: // ctrl
@@ -247,8 +249,9 @@
     }
 
   , blur: function (e) {
-      this.focused = false
-      if (!this.mousedover && this.shown) this.hide()
+      this.focused = false;
+	  //if (this.shown) this.select();
+      if (!this.mousedover && this.shown) this.hide();
     }
 
   , click: function (e) {

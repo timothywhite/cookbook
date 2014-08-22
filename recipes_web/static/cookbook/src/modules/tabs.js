@@ -10,6 +10,7 @@ app.module('Tab', function(Tab,app,Backbone,Marionette,$,_){
 		}
 	});
 	Tab.View = Backbone.Marionette.ItemView.extend({
+		//a view for displaying the tabs in the tab bar
 		template: app.Template.get('tab'),
 		tagName:'li',
 		attributes: function(){
@@ -31,6 +32,7 @@ app.module('Tab', function(Tab,app,Backbone,Marionette,$,_){
 		model: Tab.Model
 	});
 	Tab.CollectionView = Backbone.Marionette.CollectionView.extend({
+		//collection view for displaying the tab bar and handling tab events.
 		itemView: Tab.View,
 		onAfterItemAdded: function(){
 			index = this.collection.indexOf(this.collection.findWhere({'active':true}));
@@ -39,9 +41,6 @@ app.module('Tab', function(Tab,app,Backbone,Marionette,$,_){
 		initialize:function(){
 			this.on('itemview:tab:close',function(itemview,id){this.closeTab(id)});
 			this.on('itemview:tab:select',function(itemview,id){this.selectTab(id)});
-		},
-		onRender:function(){
-			
 		},
 		closeTab: function(id){
 			
@@ -85,6 +84,7 @@ app.module('Tab', function(Tab,app,Backbone,Marionette,$,_){
 	});
 	Tab.Pane = {};
 	Tab.Pane.CollectionView = Backbone.Marionette.CollectionView.extend({
+		//a view for rendering the tab pane content
 		className:'tab-content',
 		addPane: function(model){
 			this.collection.add(model);
@@ -100,6 +100,7 @@ app.module('Tab', function(Tab,app,Backbone,Marionette,$,_){
 	});
 	
 	Tab.TabManager = function(options){
+		//manager object for handling interactions between the application and the tab module
 		this.closeable = options['closeable'] === true;
 		this.type = options['type'];
 		this.panesEl = options['panesEl'];
@@ -158,6 +159,9 @@ app.module('Tab', function(Tab,app,Backbone,Marionette,$,_){
 		},
 		this.getPanes = function(){
 			return this.tabPaneView.collection;
+		};
+		this.getPaneView = function(model){
+			return this.tabPaneView.children.findByModel(model);
 		};
 		this.getActivePane = function(){
 			activeTab = this.tabView.collection.findWhere({active:true});

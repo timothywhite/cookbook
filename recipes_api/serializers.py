@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
 
 from recipes_api import models
 from rest_framework import serializers
@@ -10,6 +11,7 @@ from mixed import Mixed
 from ast import literal_eval
 
 class WritableSerializerField(serializers.WritableField):
+	"""A field to allow for one to one relationships to be modified."""
 	def to_native(self,value):
 		return self.serializer_class(value).data
 	def from_native(self,value):
@@ -61,7 +63,8 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
 			'ingredient',
 			'measurement',
 			'amount',
-			'description'
+			'description',
+			'order'
 		)
 		
 class ScaledRecipeIngredientSerializer(RecipeIngredientSerializer):
@@ -72,9 +75,7 @@ class ScaledRecipeIngredientSerializer(RecipeIngredientSerializer):
 			if 'scale' in self.context['request'].GET:
 				return str(Mixed(model.amount) * int(self.context['request'].GET['scale']))
 		return model.amount
-		
-		
-		
+	
 class UserSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = User
@@ -85,12 +86,11 @@ class UserSerializer(serializers.ModelSerializer):
 			'last_name',
 			'email'
 		)
-		
-		
+	
 class UserField(WritableSerializerField):
 	serializer_class = UserSerializer
 	model = User
-		
+	
 class ServingsField(serializers.WritableField):
 	def to_native(self,value):
 		if 'request' in self.context:

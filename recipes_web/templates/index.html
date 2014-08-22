@@ -16,17 +16,15 @@
 		<div class="navbar-inner"> 
 			<div class="container-fluid"> 
 				<a class="brand">Cookbook</a>
-				<div class="nav-collapse"> 
 					<ul class="nav"> 
 						<li class="active"><a href="/recipes">Home</a></li> 
 						<li><a href="/api" target="_blank">API</a></li>
 						{% if user.is_authenticated %}
-						<li><a href="/logout" target="_blank">Logout</a></li>
+						<li><a href="/logout">Logout</a></li>
 						{% else %}
-						<li><a href="/login" target="_blank">Login</a></li>
+						<li><a href="/login">Login</a></li>
 						{% endif %}
 					</ul> 
-				</div><!--/.nav-collapse --> 
 			</div> 
 		</div> 
 	</div>
@@ -42,7 +40,7 @@
 		</div><!--/row--> 
 		<hr>
 		<footer> 
-			<p>&copy; Tim White 2012 </p><a href="#myModal"  data-toggle="modal">Download Android Viewer</a>
+			<a href="#myModal"  data-toggle="modal">Download Android Viewer</a>
 		</footer> 
 		<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
 			<div class="modal-header">
@@ -94,6 +92,13 @@
 					return null;
 				{% endif %}
 			});
+			Handlebars.registerHelper('ifAuthenticated', function(options){
+				{% if user.is_authenticated %}
+					return options.fn(this);
+				{% else %}
+					return null;
+				{% endif %}
+			});
 			Handlebars.registerHelper('getUserId', function(block){
 				{% if user.is_authenticated %}
 					return {{user.id}};
@@ -102,12 +107,22 @@
 				{% endif %}
 			});
 		});
-	</script>
+		</script>
 	<!--end templates-->
 	
 	<!--application-->
 	<script type='text/javascript' src='/static/cookbook/src/application.js'></script>
-	
+	<script>
+		$(function(){
+			app.getUserId = function(){
+				{% if user.is_authenticated %}
+					return {{user.id}};
+				{% else %}
+					return null;
+				{% endif %}
+			}
+		});
+	</script>
 	<!--modules-->
 	<script type='text/javascript' src='/static/cookbook/src/modules/extensions.js'></script>
 	<script type='text/javascript' src='/static/cookbook/src/modules/template.js'></script>

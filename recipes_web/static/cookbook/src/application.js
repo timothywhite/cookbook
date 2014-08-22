@@ -1,16 +1,18 @@
 app = new Backbone.Marionette.Application();
 app.controller = {
 	loadRecipes: function(ids){
-		if (typeof ids === "string") ids = ids.split('/').reverse();
-		id = ids.pop();
-		if(id){
-			app.vent.trigger('fetch', new app.Recipe.Model({id: id}), {
-				success: function(model, response, options){
-					app.vent.trigger('tab:show', model);
-					options.controller.loadRecipes(ids);
-				},
-				controller: this
-			});
+		if(ids){
+			if (typeof ids === "string") ids = ids.split('/').reverse();
+			id = ids.pop();
+			if(id){
+				app.vent.trigger('fetch', new app.Recipe.Model({id: id}), {
+					success: function(model, response, options){
+						app.vent.trigger('tab:show', model);
+						options.controller.loadRecipes(ids);
+					},
+					controller: this
+				});
+			}
 		}
 	}
 }
@@ -29,7 +31,7 @@ app.addInitializer(function(){
 	app.sidebar.show(sidebar);
 	app.router = new app.Router();
 	app.recipeTabManager = new app.Tab.TabManager({
-		type: 'song',
+		type: 'recipe',
 		panesEl: '#recipe_tab_content',
 		tabsEl:'#recipe_tab_nav',
 		paneView: app.Recipe.Layout,

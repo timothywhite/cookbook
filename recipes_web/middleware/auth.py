@@ -30,18 +30,3 @@ work, ensure your TEMPLATE_CONTEXT_PROCESSORS setting includes\
 					return HttpResponse('Unauthorized', status=401)
 				else:
 					return HttpResponseRedirect(settings.LOGIN_URL)
-				
-				
-# # settings.py
-
-# LOGIN_URL = '/login/'
-
-# LOGIN_EXEMPT_URLS = (
- # r'^about\.html$',
- # r'^legal/', # allow any URL under /legal/*
-# ) 
-
-# MIDDLEWARE_CLASSES = (
-    # # ...
-    # 'python.path.to.LoginRequiredMiddleware',
-# )

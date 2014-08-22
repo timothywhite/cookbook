@@ -1,0 +1,51 @@
+<ul></ul>
+<div class="new_ingredient_container">
+	<input class="new_amount" value="" placeholder="amount"/>
+	<input class="new_measurement" value="" placeholder="measurement"/>
+	<input class="new_ingredient" value="" placeholder="ingredient"/>
+	<input class="new_description" value="" placeholder="description" />
+	<button class="btn add-ingredient"><i class="icon-plus"></i> New Ingredient</button>
+</div>
+
+
+<div id="new_measurement_{{this.recipe}}" 
+	class="modal" 
+	tabindex="-1" role="dialog" 
+	aria-labelledby="new_measurement_label_{{this.recipe}}" 
+	aria-hidden="true" 
+	style="display: none;"
+	data-backdrop="static"
+	data-keyboard="false">
+	<div class="modal-header">
+		<h3 id="new_measurement_label_{{this.recipe}}">Add New Measurement?</h3>
+	</div>
+	<div class="modal-body">
+		<p>Do you really want to add this new measurement: <span class="new_measurement_name_add "></span>?</p>
+		<p>If you are sure, enter an abbreviation for your new measurement below (if applicable):</p>
+		<input class="measurement_abbreviation_add" type="text" placeholder="Abbreviation" value="" />
+	</div>
+	<div class="modal-footer">
+		<button class="revert_measurement_add btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+		<a href="#" class="add_new_measurement_add btn btn-primary" data-dismiss="modal">Add New Measurement</a>
+	</div>
+</div>
+
+<div id="new_ingredient_{{this.recipe}}" 
+	class="modal" 
+	tabindex="-1" role="dialog" 
+	aria-labelledby="new_ingredient_label_{{this.recipe}}" 
+	aria-hidden="true" 
+	style="display: none;"
+	data-backdrop="static"
+	data-keyboard="false">
+	<div class="modal-header">
+		<h3 id="new_ingredient_label_{{this.recipe}}">Add New Ingredient?</h3>
+	</div>
+	<div class="modal-body">
+		<p>Are you sure you want to add this new ingredient: <span class="new_ingredient_name_add"></span>?</p>
+	</div>
+	<div class="modal-footer">
+		<button class="revert_ingredient_add btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+		<a href="#" class="add_new_ingredient_add btn btn-primary" data-dismiss="modal">Add New Ingredient</a>
+	</div>
+</div>

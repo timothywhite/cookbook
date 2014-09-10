@@ -50,17 +50,23 @@ app.module("Recipe", function(Recipe,app,Backbone,Marionette,$,_){
 		},
 		toggleEditMode: function(){
 			this.editmode = !this.editmode;
-			
-			this.ingredientsView.close();
-			this.ingredientsView = this.editmode ? new app.RecipeIngredient.EditCompositeView({collection: this.model.get('recipe_ingredients'),recipe_id:this.model.get('id')}) : new app.RecipeIngredient.CollectionView({collection: this.model.get('recipe_ingredients')});
-			this.ingredients.show(this.ingredientsView);
-			
-			this.stepsView.close();
-			this.stepsView = this.editmode ? new app.RecipeStep.EditCompositeView({collection: this.model.get('steps'),recipe_id:this.model.get('id')}) : new app.RecipeStep.CollectionView({collection: this.model.get('steps')});
-			this.steps.show(this.stepsView);
-			
-			this.setTemplate();
-			this.renderAll();
+			layout = this;
+			this.model.fetch({
+				data: $.param({raw: this.editmode ? 1 : 0}),
+				success: function() {
+					layout.ingredientsView.close();
+					layout.ingredientsView = layout.editmode ? new app.RecipeIngredient.EditCompositeView({collection: layout.model.get('recipe_ingredients'),recipe_id:layout.model.get('id')}) : new app.RecipeIngredient.CollectionView({collection: layout.model.get('recipe_ingredients')});
+					layout.ingredients.show(layout.ingredientsView);
+
+					layout.stepsView.close();
+					layout.stepsView = layout.editmode ? new app.RecipeStep.EditCompositeView({collection: layout.model.get('steps'),recipe_id:layout.model.get('id')}) : new app.RecipeStep.CollectionView({collection: this.model.get('steps')});
+					layout.steps.show(layout.stepsView);
+
+					layout.setTemplate();
+					layout.renderAll();
+				}
+			})
+
 		},
 		saveRecipe: function(){
 			this.model.set('name', this.$('.recipe_name').val() == '' ? this.model.get('name') : this.$('.recipe_name').val());

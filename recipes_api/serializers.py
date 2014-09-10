@@ -79,7 +79,18 @@ class ScaledRecipeIngredientSerializer(RecipeIngredientSerializer):
 		return model.amount
 
 	def rendered_description(self, model):
-		return Template('{% load recipe_tags %}' + model.description).render(Context({}));
+		value = model.description
+		try:
+			raw = False
+			if 'request' in self.context and 'raw' in self.context['request'].GET:
+				raw = self.context['request'].GET['raw'] == '1'
+
+			if not raw:
+				return Template('{% load recipe_tags %}' + value).render(Context({}))
+			else:
+				return value
+		except:
+			return value;
 
 class UserSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -113,7 +124,17 @@ class RecipeListSerializer(serializers.ModelSerializer):
 
 class DescriptionField(serializers.WritableField):
 	def to_native(self, value):
-		return Template('{% load recipe_tags %}' + value).render(Context({}));
+		try:
+			raw = False
+			if 'request' in self.context and 'raw' in self.context['request'].GET:
+				raw = self.context['request'].GET['raw'] == '1'
+
+			if not raw:
+				return Template('{% load recipe_tags %}' + value).render(Context({}))
+			else:
+				return value
+		except:
+			return value;
 	def from_native(self, value):
 		return value
 

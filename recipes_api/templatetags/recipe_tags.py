@@ -16,6 +16,6 @@ class RecipeLinkNode(template.Node):
 		self.link_text = text
 
 	def render(self, context):
-		return "<a class='recipe_link' href='http://thatswhatshecooked.me/#!r/" + self.recipe_id + "'>" + self.link_text + "</a>"
+		return "<a class='recipe_link' href='/#!r/" + self.recipe_id + "'>" + self.link_text + "</a>"
 
 register.tag('recipe_link',recipe_link)

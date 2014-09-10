@@ -38,7 +38,7 @@ class RecipeDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class RecipeList(generics.ListCreateAPIView):
 	model = models.Recipe
-	serializer_class = serializers.RecipeListSerializer
+	serializer_class = serializers.RecipeSerializer
 
 	def get_queryset(self):
 		recipes = models.Recipe.objects.all()
